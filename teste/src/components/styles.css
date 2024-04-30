@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
+
+body {
+  margin: 0;
+  background-image: url('../assets/imgs/backgroud.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arbutus Slab', serif;
+}
+
+.container {
+  width: 400px;
+  color: #C75114;
+  padding: 20px;
+  background-color: #F2F2F2;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container h2 {
+  font-size: 40px;
+  margin: 15px 0px 30px 0px;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  font-size: 22px;
+  margin: 0;
+  width: 85%;
+}
+
+input {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+button, button[type="submit"] {
+  font-family: 'Arbutus Slab', serif;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  background-color: #C75114;
+  color: white;
+  cursor: pointer;
+  margin: 15px 0px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover, button[type="submit"]:hover {
+  background-color: #E8A87C;
+}
+
+button[type="submit"] {
+  width: 100%;
+}
+
+article#Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  width: 80%;
+  padding: 10px;
+}
