@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
 
-body {
+article#Login, article#Cadastro {
   margin: 0;
-  background-image: url('../assets/imgs/backgroud.png');
+  background-image: url('../../assets/imgs/backgroud.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -75,6 +75,12 @@ article#Login {
 }
 
 button {
-  width: 80%;
+  width: 44%;
   padding: 10px;
+}
+
+a:-webkit-any-link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
 }

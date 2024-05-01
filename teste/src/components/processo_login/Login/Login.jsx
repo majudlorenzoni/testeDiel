@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles.css";
 
 export class Login extends React.Component {
@@ -12,11 +13,18 @@ export class Login extends React.Component {
               <input type="email" id="email" name="email" required />
               <label htmlFor="password">Senha</label>
               <input type="password" id="password" name="password" required />
-              <button type="submit">Entrar</button>
+              <button type="submit">
+              <Link id="entrar" to="/cadastro">Entrar</Link>
+              
+              </button>
             </form>
           </div>
-            <button id="CADASTRO">Cadastre-se</button>
-      </article>
+          <button id="CADASTRO">
+          <Link id="cadastro" to="/cadastro">Cadastre-se</Link>
+          </button>
+
+          
+        </article>
     );
   }
 }

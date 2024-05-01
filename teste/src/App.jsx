@@ -1,11 +1,13 @@
 import React from "react";
 import './styles/App.css';
-import { Login } from "./components/Login/Login";
+import AppRoutes from "./Routes.js";
+// import Welcome from "./components/calendario/welcome/Welcome";
+
 class App extends React.Component {
 
   render(){
     return (
-      <Login />
+      <AppRoutes />
     );
   }
 }
