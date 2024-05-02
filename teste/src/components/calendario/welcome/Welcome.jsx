@@ -1,5 +1,6 @@
 import React from "react";
 // import { Link } from "react-router-dom";
+import PainelTarefa from '../tarefas/PainelTarefa';
 import "../styles.css";
 
 export class Welcome extends React.Component {
@@ -9,6 +10,8 @@ export class Welcome extends React.Component {
       data: this.getDataAtual(),
       exibirOpcoes: false,
       opcaoSelecionada: "",
+      showPainel: null,
+      tarefas: [],
     };
   }
 
@@ -61,12 +64,38 @@ export class Welcome extends React.Component {
     }
   };
 
+  handlePainel = () => {
+    console.log("Painel acionado")
+    this.setState({
+      showComponent: 'PainelTarefa'
+    });
+  };
+
+  handleFecharPainel = () => {
+    this.setState({ showComponent: null });
+  };
+
+  handleSalvarTarefa = (titulo, descricao, data, hora, duracao) => {
+    const novaTarefa = {
+      titulo: titulo,
+      descricao: descricao,
+      data: data,
+      hora: hora,
+      duracao: duracao
+    };
+
+    this.setState((prevState) => ({
+      tarefas: [...prevState.tarefas, novaTarefa],
+      showComponent: null 
+    }));
+  };
+
   render() {
     return (
       <div className="welcome">
       <h1>Bem vinda, Maria</h1>
         <div className="navbar">
-          <svg id="add-tarefa" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256">
+          <svg id="add-tarefa" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256" onClick={this.handlePainel}>
             <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
           </svg>
 
@@ -81,9 +110,9 @@ export class Welcome extends React.Component {
           )}
           </div>
         </div>
+        {this.state.showComponent === 'PainelTarefa' && <PainelTarefa onSave={this.handleSalvarTarefa} onClose={this.handleFecharPainel} />}
       </div>
     );
   }
 }
-
 export default Welcome;
