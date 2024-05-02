@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import PainelTarefa from '../tarefas/PainelTarefa';
-import DiaTarefas from '../tarefas/DiaTarefas';
+import DiaTarefas,  { getTarefaSelecionada } from '../tarefas/DiaTarefas';
 import SemanaTarefas from "../tarefas/SemanaTarefas";
 import MesTarefas from "../tarefas/MesTarefas";
 import "../styles.css";
@@ -47,7 +47,8 @@ export class Welcome extends React.Component {
     if (opcao === "mês") {
       this.setState({
         data: meses[dataAtual.getMonth()],
-        exibirOpcoes: false
+        exibirOpcoes: false,
+        opcaoSelecionada: "mês"
       });
     } else if (opcao === "dia") {
       const dia = dataAtual.getDate().toString().padStart(2, '0');
@@ -55,7 +56,8 @@ export class Welcome extends React.Component {
       const ano = dataAtual.getFullYear().toString().slice(-2);
       this.setState({
         data: `${dia}/${mes}/${ano}`,
-        exibirOpcoes: false
+        exibirOpcoes: false,
+        opcaoSelecionada: "dia"
       });
     } else if (opcao === "semana") {
       let diaInicio = primeiroDiaSemana.toString().padStart(2, '0');
@@ -67,7 +69,8 @@ export class Welcome extends React.Component {
       const diaFim = ultimoDiaSemana.toString().padStart(2, '0');
       this.setState({
         data: `${diaInicio}/${mesInicio} - ${diaFim}/${mesInicio}`,
-        exibirOpcoes: false
+        exibirOpcoes: false,
+        opcaoSelecionada: "semana"
       });
     }
 
@@ -89,11 +92,28 @@ export class Welcome extends React.Component {
     .catch(error => {
       console.error("Erro ao carregar tarefas do usuário:", error);
     });
-};
+  };
 
-  render() {
+
+removerTarefa = () => {
+  const { tarefaSelecionada } = this.state;
+  if (tarefaSelecionada) {
     const userId = localStorage.getItem('userId');
-    console.log("userId:", userId);
+    axios.delete(`http://localhost:3000/calendario/${userId}/tarefas/${tarefaSelecionada.id}`)
+      .then(response => {
+        console.log("Tarefa removida com sucesso");
+        this.carregarTarefas(); // Recarrega as tarefas após a remoção
+      })
+      .catch(error => {
+        console.error("Erro ao remover tarefa:", error);
+      });
+  } else {
+    console.log("Nenhuma tarefa selecionada para remover");
+  }
+};
+render() {
+  const userId = localStorage.getItem('userId');
+  console.log("userId:", userId);
     return (
       <div className="welcome">
           <div className="calendario">
@@ -121,6 +141,8 @@ export class Welcome extends React.Component {
           </div>
 
           {this.state.opcaoSelecionada === "dia" && <DiaTarefas tarefas={this.state.tarefas} />}
+          {this.state.opcaoSelecionada === "semana" && <SemanaTarefas tarefas={this.state.tarefas} />}
+          {this.state.opcaoSelecionada === "mês" && <MesTarefas tarefas={this.state.tarefas} />}
 
         </div>
     );

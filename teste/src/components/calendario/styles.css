@@ -164,3 +164,8 @@ button.btn-salvar {
 button.btn-salvar:hover, button#duracao:hover{
   background-color: #E8A87C;
 }
+
+tr.selected{
+    background-color: rgb(110, 0, 0);
+  }
+  
