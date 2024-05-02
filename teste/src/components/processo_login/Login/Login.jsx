@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import {fetchUsuarios } from "../../utils.js";
 import "../styles.css";
 
 function Login() {
   const [usuarios, setUsuarios] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [userId, setUserId] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,17 +32,21 @@ function Login() {
     const usuarioValido = usuarios.find((usuario) => usuario.email === email && usuario.senha === senha);
 
     if (usuarioValido) {
+      setUserId(usuarioValido.id);
+      localStorage.setItem('userId', usuarioValido.id);
+      console.log("Usuário logado:", usuarioValido.id); //apagar depois
       window.location.href = "/calendario";
     } else {
-      setErrorMessage("Usuário não consta no sistema. Cadastre-se para ter acesso");
-    }
+      toast.error("Usuário não consta no sistema. Cadastre-se para ter acesso", {
+        autoClose: 3000,
+        position: "bottom-right"
+      });    }
   };
 
   return (
     <article id="Login">
       <div className="container">
         <h2>Login</h2>
-        {errorMessage && <p>{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">E-mail</label>
           <input type="email" id="email" name="email" required />
@@ -56,6 +63,7 @@ function Login() {
           Cadastre-se
         </Link>
       </button>
+      <ToastContainer autoClose={3000} position="bottom-right" />
     </article>
   );
 }

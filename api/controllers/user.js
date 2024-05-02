@@ -21,15 +21,17 @@ export const addUser = (req, res) => {
   });
 }
 
-export const getTasks = (_, res) => {
-  const q = "SELECT * FROM tarefas";
+export const getUserTasks = (req, res) => {
+  const { userId } = req.params;
+  const q = "SELECT * FROM tarefas WHERE id_usuario = ?";
 
-  db.query(q, (err, data) => {
+  db.query(q, [userId], (err, data) => {
     if(err) return res.json(err);
 
     return res.status(200).json(data);
   });
 };
+
 
 export const addTask = (req, res) => {
   const q = "INSERT INTO tarefas (titulo, descricao, data, hora, duracao) VALUES (?, ?, ?, ?, ?)";
