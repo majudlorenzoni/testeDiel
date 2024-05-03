@@ -32,22 +32,40 @@ export const getUserTasks = (req, res) => {
   });
 };
 
+export const getTask = (req, res) => {
+  const { tarefaId } = req.params;
+  const q = "SELECT * FROM tarefas WHERE id = ?";
 
-export const addTask = (req, res) => {
-  const q = "INSERT INTO tarefas (titulo, descricao, data, hora, duracao) VALUES (?, ?, ?, ?, ?)";
-  const { titulo, descricao, data, hora, duracao } = req.body;
-  db.query(q, [titulo, descricao, data, hora, duracao], (err, data) => {
+  db.query(q, [tarefaId], (err, data) => {
     if(err) return res.json(err);
 
+    return res.status(200).json(data);
+  });
+};
+
+export const addTask = (req, res) => {
+  const { userId } = req.params; 
+  const { titulo, data, hora, duracao, descricao } = req.body; 
+  const q = "INSERT INTO tarefas (id_usuario, titulo, data, hora, duracao, descricao) VALUES (?, ?, ?, ?, ?, ?)";
+  
+  console.log("Dados recebidos:", userId, titulo, data, hora, duracao, descricao);
+  
+  db.query(q, [userId, titulo, data, hora, duracao, descricao], (err, result) => {
+    if (err) {
+      console.error("Erro ao cadastrar tarefa:", err);
+      return res.status(500).json("Erro ao cadastrar tarefa");
+    }
+
+    console.log("Tarefa cadastrada com sucesso.");
     return res.status(200).json("Tarefa cadastrada com sucesso.");
   });
-}
+};
 
 export const deleteTask = (req, res) => {
   const q = "DELETE FROM tarefas WHERE id = ?";
-  const { id } = req.params;
+  const { tarefaId  } = req.params;
 
-  db.query(q, [id], (err, data) => {
+  db.query(q, [tarefaId ], (err, data) => {
     if(err) return res.json(err);
 
     return res.status(200).json("Tarefa deletada com sucesso.");
@@ -57,10 +75,23 @@ export const deleteTask = (req, res) => {
 export const updateTask = (req, res) => {
   const q = "UPDATE tarefas SET titulo = ?, descricao = ?, data = ?, hora = ?, duracao = ? WHERE id = ?";
   const { titulo, descricao, data, hora, duracao } = req.body;
-  const { id } = req.params;
-  db.query(q, [titulo, descricao, data, hora, duracao, id], (err, data) => {
+  const { tarefaId } = req.params;
+  db.query(q, [titulo, descricao, data, hora, duracao, tarefaId], (err, data) => {
     if(err) return res.json(err);
 
     return res.status(200).json("Tarefa atualizada com sucesso.");
   });
 }
+
+export const searchTask = (req, res) => {
+  const { id_usuario, titulo } = req.body;
+  console.log("Cheugei aqui", id_usuario, titulo)
+  const q = "SELECT * FROM tarefas WHERE titulo LIKE ? AND id_usuario = ?";
+  
+db.query(q, [`%${titulo}%`, id_usuario], (err, data) => {
+  if (err) return res.status(500).json({ error: err.message });
+  return res.status(200).json(data);
+});
+
+};
+

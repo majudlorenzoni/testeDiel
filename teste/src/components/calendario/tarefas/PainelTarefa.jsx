@@ -1,20 +1,17 @@
 import React from 'react';
 import '../styles.css';
-import { toast } from 'react-toastify';
-import { FaTrash, FaEdit } from 'react-icons/fa';
-import { format } from 'date-fns';
 import axios from 'axios';
 
 export class PainelTarefa extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      titulo: '',
-      descricao: '',
-      data: '',
-      hora: '',
-      duracao: 0,
-      duracaoSelecionada: null
+      titulo: props.tarefaSelecionada.titulo,
+      descricao: props.tarefaSelecionada.descricao,
+      data: props.tarefaSelecionada.data,
+      hora: props.tarefaSelecionada.hora,
+      duracao: props.tarefaSelecionada.duracao,
+      duracaoSelecionada: props.tarefaSelecionada.duracao
     };
   }
 
@@ -43,7 +40,7 @@ export class PainelTarefa extends React.Component {
   };
 
   render() {
-    const { titulo, descricao, data, hora } = this.state;
+    const { titulo, descricao, data, hora, duracao} = this.state.tarefaSelecionada || {};
     return (
       <div className="painel-tarefa">
         <div className="painel-tarefa-header">
@@ -51,12 +48,12 @@ export class PainelTarefa extends React.Component {
         </div>
         <div className="painel-tarefa-body">
           <p>Título</p>
-          <input type="text"/>
+          <input type="text" value={titulo} onChange={this.handleTituloChange} />
 
           <div className="data">
             <p>Data</p>
-            <input type="date" ></input> <input type="time" />
-            </div>
+            <input type="date" value={data} onChange={this.handleDataChange} /> <input type="time" value={hora} onChange={this.handleHoraChange} />
+          </div>
 
           <p>Duração</p>
           <div className="duracao">
@@ -67,8 +64,8 @@ export class PainelTarefa extends React.Component {
             <button id="duracao" className={this.state.duracaoSelecionada === 120 ? 'selected' : ''} onClick={() => this.setDuracao(120)}>2 horas</button>
           </div>
           <p>Descrição</p>
-          <textarea placeholder="Descrição"></textarea>
-          <button className="btn-salvar" onClick={() => this.props.onSave(titulo, descricao, data, hora, this.state.duracao)}>Salvar Tarefa</button>
+          <textarea placeholder="Descrição" value={descricao} onChange={this.handleDescricaoChange}></textarea>
+          <button className="btn-salvar" onClick={() => this.props.onSave(this.state)}>Salvar Tarefa</button>
         </div>
       </div>
     );

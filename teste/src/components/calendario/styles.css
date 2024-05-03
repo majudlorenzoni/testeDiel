@@ -16,12 +16,19 @@ h1 {
 
 } 
 
-.welcome{
+h2 {
+  font-size: 30px;
+  color: #eb7940;
+  text-align: center;
+  font-weight: 200;
+}
+
+.header{
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  margin: 0 35px;
+  margin: 10px 35px;
 }
 
 svg, span {
@@ -30,16 +37,20 @@ svg, span {
 }
 
 span {
+  background-color:#C75114;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+div.painel_tarefa_header span.btn-fechar {
   border: none;
   border-radius: 5px;
-  background-color: #C75114;
-  padding: 10px 20px;
-  min-width: 120px;
-  display: inline-block;
+  width: 120px;
+  height: 100px;
   text-align: center;  
 }
 
-span:hover {
+span.btn-fechar:hover {
   background-color: #eb7940;
   cursor: pointer;
 }
@@ -52,6 +63,7 @@ svg#add-tarefa:hover, svg#edit-tarefa:hover, svg#remove-tarefa:hover, svg#search
   transition: 0.3s;
   background-color:#C75114;
   border-radius: 5px;
+  padding: 5px;
 }
 svg#search-tarefa{
 }
@@ -77,7 +89,7 @@ svg#search-tarefa{
 }
 
 .opcoes li:hover {
-  background-color: #eb7940; /* Cor de fundo ao passar o mouse sobre os itens */
+  background-color: #eb7940; 
 }
 
 .painel-tarefa {
@@ -132,7 +144,7 @@ button#duracao{
 }
 
 button#duracao.selected {
-  background-color: #000D73; /* Cor azul para o botão selecionado */
+  background-color: #000D73;
 }
 
 button.btn-fechar {
@@ -165,7 +177,55 @@ button.btn-salvar:hover, button#duracao:hover{
   background-color: #E8A87C;
 }
 
-tr.selected{
-    background-color: rgb(110, 0, 0);
+  #mostra {
+    background-color: #D9D9D9;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 50px;
+  }
+
+  #mostra h2 {
+    background-color: #007bff; 
+    color: white;
+    border-radius: 5px;
   }
   
+  table {
+    width: 100%;
+    border-spacing: 10px;
+    border-collapse: separate;
+  }
+  
+  table th,
+  table td {
+    padding: 8px;
+  text-align: center;
+  color: #000000;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  }
+  
+  table thead tr th {
+    text-align: center;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  
+  
+  tr#tarefas-diarias-id.tarefa-tabela.selected,  .tarefa-tabela.selected {
+    background-color: #C75114; 
+  }
+  
+  tr#tarefas-diarias-id.tarefa-tabela,.tarefa-tabela {
+    background-color: #F2F2F2;
+    border-radius: 10px;
+
+  }
+
+  tr#tarefas-diarias-id:hover, .tarefa-tabela:hover{
+    background-color: #eb7940;
+  }
+
+
+
